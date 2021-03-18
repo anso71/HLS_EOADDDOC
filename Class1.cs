@@ -34,7 +34,7 @@ namespace HLS_EOADDDOC
 			sql.Append("select doc.DocumentArchiveId,emp.AssignmentId,plo.PersonId, plo.PersonName, plo.UpdatedBy, Doc.Pdf, Doc.DocumentName, Doc.DocumentType, Doc.FileName, Doc.ContractName from evryone.dbo.DocumentArchives Doc ");
 			sql.Append("join evryone.dbo.Employment emp on Doc.CompanyId = emp.CompanyId and Doc.EmploymentId = emp.EmploymentId ");
 			sql.Append("join evryone.dbo.Employee plo  on plo.CompanyId = Doc.CompanyId and emp.EmployeeId = plo.EmployeeId ");
-			sql.Append("where Doc.CompanyId = @client  and doc.SignatureStatus is NULL and doc.UpdatedAt > getDate() - @days");	
+			sql.Append("where Doc.CompanyId = @client and Doc.DigitalSignaturId not like 0  and doc.SignatureStatus is NULL and doc.UpdatedAt > getDate() - @days");	
 			sql["client"] = client;
 			sql["days"] = Int32.Parse(days);
 			CurrentContext.Database.Read(sql, dataTable);
